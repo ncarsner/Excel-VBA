@@ -1,0 +1,212 @@
+Sub Number()
+'
+' Keyboard Shortcut: Ctrl+Shift+N
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    ActiveCell.EntireColumn.Select
+    Selection.NumberFormat = "0"
+    
+    Cells(RL, CL).Select
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub Dates()
+'
+' Keyboard Shortcut: Ctrl+Shift+D
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    ActiveCell.EntireColumn.Select
+    Selection.NumberFormat = "m/d/yyyy"
+
+    Cells(RL, CL).Select
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub ResizeAll()
+'
+' Keyboard Shortcut: Ctrl+Shift+Q
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+
+    Cells.Select
+    Cells.EntireColumn.AutoFit
+    
+    Cells(RL, CL).Select
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub ResizePrompt()
+'
+' Keyboard Shortcut: Ctrl+Shift+W
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    On Error GoTo ErrHandler
+    
+    w = InputBox("What is the column width?")
+        
+    Cells.Select
+    Selection.ColumnWidth = w
+
+ErrHandler:
+    Cells(RL, CL).Select
+    
+    Exit Sub
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub UnhideAll()
+'
+' Keyboard Shortcut: Ctrl+Shift+U
+'
+    Dim ws As Worksheet
+    
+    For Each ws In Worksheets
+        ws.Visible = True
+    Next
+ 
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub PasteAll()
+'
+' Keyboard Shortcut: Ctrl+Shift+X
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+
+    If MsgBox("This will copy and paste all content! Are you sure?", vbYesNo) = vbNo Then Exit Sub
+
+    ActiveSheet.Cells.Copy
+    ActiveSheet.Cells.PasteSpecial Paste:=xlPasteValues
+    Application.CutCopyMode = False
+    
+    Cells(RL, CL).Select
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub RenameSheet()
+'
+' Keyboard Shortcut: Ctrl+Shift+S
+'
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    On Error GoTo ErrHandler
+
+    ActiveSheet.Name = InputBox("New tab name?")
+    
+    Cells(RL, CL).Select
+    
+ErrHandler:
+    Exit Sub
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub CellQA()
+'
+' Keyboard Shortcut: Ctrl+Shift+E
+'
+    Application.Selection.Interior.Color = RGB(255, 255, 0)
+    Application.Selection.Font.Color = RGB(255, 0, 0)
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub NoColor()
+'
+' Keyboard Shortcut: Ctrl+Shift+Z
+'
+    Application.Selection.Interior.Color = xlNone
+    Application.Selection.Font.ColorIndex = xlAuto
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub CellGood()
+'
+' Keyboard Shortcut: Ctrl+Shift+Y
+'
+    Application.Selection.Interior.Color = RGB(198, 239, 206)
+    Application.Selection.Font.Color = RGB(0, 97, 0)
+    
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub CellNeutral()
+'
+' Keyboard Shortcut: Ctrl+Shift+T
+'
+    Application.Selection.Interior.Color = RGB(255, 235, 156)
+    Application.Selection.Font.Color = RGB(156, 101, 0)
+    
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub CellBad()
+'
+' Keyboard Shortcut: Ctrl+Shift+R
+'
+    Application.Selection.Interior.Color = RGB(255, 199, 206)
+    Application.Selection.Font.Color = RGB(156, 0, 6)
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub RefreshPivots()
+
+Dim sh As Worksheet
+Dim pt As PivotTable
+
+For Each sh In ActiveWorkbook.Worksheets
+    For Each pt In sh.PivotTables
+        pt.RefreshTable
+        pt.Update
+    Next pt
+Next sh
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub ColorCellsPrompt()
+'
+' Prompts user to input 1) cell color and then 2) font color of the current selection
+' Keyboard shortcut: Ctrl+Shift+H
+'
+Dim lcolor As Long, fcolor As Long
+
+    If Application.Dialogs(xlDialogEditColor).Show(10, 255, 199, 206) = True Then
+        'user pressed OK
+        lcolor = ActiveWorkbook.Colors(10)
+        Application.Selection.Interior.Color = lcolor
+    End If
+
+    If Application.Dialogs(xlDialogEditColor).Show(10, 156, 0, 6) = True Then
+        fcolor = ActiveWorkbook.Colors(10)
+        Application.Selection.Font.Color = fcolor
+    Else
+        'user pressed Cancel
+End If
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub FindFormulas()
+'
+' Keyboard Shortcut: Ctrl+Shift+F
+'
+    On Error GoTo ErrHandler
+
+    Selection.SpecialCells(xlCellTypeFormulas, 23).Select
+    Exit Sub
+
+ErrHandler:
+    MsgBox ("No cells were found")
+    Exit Sub
+    
+End Sub
+
