@@ -1,3 +1,2 @@
 # Excel-VBA
-
-This is a repository of custom created VBA script for Microsoft Excel. Most is generally applicable. Keyboard shortcuts are only recommendations.
+Original or adapted VBA scripts for Microsoft Excel for general use.
