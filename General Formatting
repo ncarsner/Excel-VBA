@@ -209,4 +209,33 @@ ErrHandler:
     Exit Sub
     
 End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub TabColors()
+' assigns cascading color to all worksheet tabs in the active workbook
+Dim ws  As Worksheet
+Dim indexcolor As Long
+' clears any existing tab colors before prompt
+ResetTabColors
 
+    If Application.Dialogs(xlDialogEditColor).Show(10, 255, 199, 206) = True Then
+        'user pressed OK
+        indexcolor = ActiveWorkbook.Colors(10)
+        'Application.Selection.Interior.Color = lcolor
+    End If
+    
+    For Each ws In Worksheets
+        ws.Tab.Color = indexcolor
+        indexcolor = indexcolor + 2000
+    Next ws
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
+Sub ResetTabColors()
+
+Dim ws As Worksheet
+    
+    For Each ws In Worksheets()
+        ws.Tab.Color = RGB(242, 242, 242)
+    Next ws
+    
+End Sub
