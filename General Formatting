@@ -1,6 +1,6 @@
 Sub Number()
 '
-' Keyboard Shortcut: Ctrl+Shift+N
+' Formats active column as Number, no zeroes
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -15,7 +15,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub Dates()
 '
-' Keyboard Shortcut: Ctrl+Shift+D
+' Formats active column as Short Date (M/D/YYYY)
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -30,7 +30,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub ResizeAll()
 '
-' Keyboard Shortcut: Ctrl+Shift+Q
+' Formats all columns in Active Sheet to best fit
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -45,7 +45,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub ResizePrompt()
 '
-' Keyboard Shortcut: Ctrl+Shift+W
+' Prompts cancellable input value, formats all columns in Active Sheet to input width
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -67,7 +67,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub UnhideAll()
 '
-' Keyboard Shortcut: Ctrl+Shift+U
+' Unhides all hidden tabs within Active Workbook
 '
     Dim ws As Worksheet
     
@@ -79,7 +79,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub PasteAll()
 '
-' Keyboard Shortcut: Ctrl+Shift+X
+' Removes formulas from Active Sheet by copying and pasting all values, prompts for verification prior to execution
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -97,7 +97,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub RenameSheet()
 '
-' Keyboard Shortcut: Ctrl+Shift+S
+' Prompts cancellable input value, renames Active Sheet tab to input value
 '
     Dim RL As Long, CL As Integer
     RL = ActiveCell.Row
@@ -116,7 +116,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub CellQA()
 '
-' Keyboard Shortcut: Ctrl+Shift+E
+' Shades Active Cell(s) to Yellow background, Red text
 '
     Application.Selection.Interior.Color = RGB(255, 255, 0)
     Application.Selection.Font.Color = RGB(255, 0, 0)
@@ -125,7 +125,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub NoColor()
 '
-' Keyboard Shortcut: Ctrl+Shift+Z
+' Removes background color and font color from Active Cell(s)
 '
     Application.Selection.Interior.Color = xlNone
     Application.Selection.Font.ColorIndex = xlAuto
@@ -134,7 +134,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub CellGood()
 '
-' Keyboard Shortcut: Ctrl+Shift+Y
+' Shades Active Cell(s) to Light Green background, Dark Green text (Good per Excel format ribbon)
 '
     Application.Selection.Interior.Color = RGB(198, 239, 206)
     Application.Selection.Font.Color = RGB(0, 97, 0)
@@ -143,7 +143,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub CellNeutral()
 '
-' Keyboard Shortcut: Ctrl+Shift+T
+' Shades Active Cell(s) to Beige background, Dark Brown text (Neutral per Excel format ribbon)
 '
     Application.Selection.Interior.Color = RGB(255, 235, 156)
     Application.Selection.Font.Color = RGB(156, 101, 0)
@@ -152,7 +152,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub CellBad()
 '
-' Keyboard Shortcut: Ctrl+Shift+R
+' Shades Active Cell(s) to Light Red background, Dark Red text (Bad per Excel format ribbon)
 '
     Application.Selection.Interior.Color = RGB(255, 199, 206)
     Application.Selection.Font.Color = RGB(156, 0, 6)
@@ -160,6 +160,10 @@ Sub CellBad()
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub RefreshPivots()
+
+'
+' Refreshes all PivotTables in Active Workbook
+'
 
 Dim sh As Worksheet
 Dim pt As PivotTable
@@ -174,10 +178,11 @@ Next sh
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub ColorCellsPrompt()
+
 '
 ' Prompts user to input 1) cell color and then 2) font color of the current selection
-' Keyboard shortcut: Ctrl+Shift+H
 '
+
 Dim lcolor As Long, fcolor As Long
 
     If Application.Dialogs(xlDialogEditColor).Show(10, 255, 199, 206) = True Then
@@ -197,7 +202,7 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub FindFormulas()
 '
-' Keyboard Shortcut: Ctrl+Shift+F
+' Highlights all Cells in Active Sheet with Formulas (not static values)
 '
     On Error GoTo ErrHandler
 
@@ -211,9 +216,11 @@ ErrHandler:
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub TabColors()
+
 ' assigns cascading color to all worksheet tabs in the active workbook
 Dim ws  As Worksheet
 Dim indexcolor As Long
+
 ' clears any existing tab colors before prompt
 ResetTabColors
 
@@ -231,6 +238,10 @@ ResetTabColors
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub ResetTabColors()
+
+'
+' Sets all tab colors to default values
+'
 
 Dim ws As Worksheet
     
