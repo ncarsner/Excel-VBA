@@ -1,0 +1,29 @@
+Public Function RemoveDuplicates(list As String, delimiter As String) As String
+Dim arrSplit As Variant, i As Long, tmpDict As Object, tmpOutput As String
+Set tmpDict = CreateObject("Scripting.Dictionary")
+arrSplit = Split(list, delimiter)
+For i = LBound(arrSplit) To UBound(arrSplit)
+    If Not tmpDict.Exists(arrSplit(i)) Then
+        tmpDict.Add arrSplit(i), arrSplit(i)
+        tmpOutput = tmpOutput & arrSplit(i) & delimiter
+    End If
+Next i
+If tmpOutput <> "" Then tmpOutput = Left(tmpOutput, Len(tmpOutput) - Len(delimiter))
+RemoveDuplicates = tmpOutput
+'housekeeping
+Set tmpDict = Nothing
+End Function
+
+Sub ZapDuplicatesInPlace()
+Dim r As Range, va() As Variant
+Set r = Application.InputBox("Select range to remove duplicates cell by cell.", "Remove Duplicates From Lists", , , , , , 8)
+va = r.value
+For i = LBound(va, 1) To UBound(va, 1)
+    For j = LBound(va, 2) To UBound(va, 2)
+        'This assumes delimiter is comma followed by space.
+        va(i, j) = RemoveDuplicates(CStr(va(i, j)), ", ")
+    Next j
+Next i
+'Print output to sheet
+r.value = va
+End Sub
