@@ -1,0 +1,153 @@
+Option Explicit
+
+'Private Sub Auto_Open()
+
+    'ActiveWorkbook.RefreshAll
+
+    'Call AutoReportPivotRefresh
+    'Call SaveCopy
+    
+'End Sub
+
+Sub AutoReportPivotRefresh()
+
+Dim sh As Worksheet
+Dim pt As PivotTable
+
+For Each sh In ActiveWorkbook.Worksheets
+    For Each pt In sh.PivotTables
+        pt.RefreshTable
+        pt.Update
+    Next pt
+Next sh
+
+End Sub
+
+Sub SaveCopy()
+
+    Dim ReportName As String
+    Dim ReportSource As String
+    Dim ReportDate As Date
+    Dim ReportType As String
+    
+    ReportName = "REPORT NAME"
+    ' account for spaces in directory name
+    ReportSource = "REPORT LOCATION"
+
+    ' Do not display the message about overwriting the existing file
+        Application.DisplayAlerts = False
+    ' Save the active workbook with the name of the file and report run date
+        ActiveWorkbook.SaveAs Filename:=ReportSource & ReportName & " " & Format(Now(), "YYYY-MM-DD") & ".xlsx", FileFormat:=51, CreateBackup:=False
+
+Call EmailNotice
+
+    ' Close the workbook
+        ActiveWorkbook.Close
+
+    Application.DisplayAlerts = True
+
+End Sub
+
+Sub EmailNotice()
+
+'
+' must include reference to Microsoft Outlook XX.0 Object Library
+'
+
+'variables for email message
+Dim xOtl As Outlook.Application
+Dim xOtlMail As Outlook.MailItem
+Dim StrBody As String
+Dim strSig As String
+
+Dim validsend As Outlook.Inspector
+
+' variables for notification list
+Dim olMailItm As Object
+Dim iCounter As Integer
+Dim Dest As Variant
+
+Dim tbl As ListObject
+Dim ToList As Range, CcList As Range, BccList As Range
+Dim ToCell As Range, CcCell As Range, BccCell As Range
+Dim ToDest As String, CcDest As String, BccDest As String
+
+' elements below should be verified and are able to be renamed
+Set tbl = ActiveWorkbook.Sheets("Notification List").ListObjects("Table2")
+
+Set ToList = tbl.ListColumns(1).DataBodyRange
+Set CcList = tbl.ListColumns(2).DataBodyRange
+Set BccList = tbl.ListColumns(3).DataBodyRange
+
+    ' body of email notification that includes link
+    StrBody = "<font face=Calibri Body size=4> Good morning," _
+              & "<br>" & "<br>" _
+              & "The REPORT NAME has been updated and can be accessed " _
+              & "<a href=" _
+              & "REPORT LOCATION" _
+              & ">here</a>" _
+              & "<br>" & "<br>" _
+              & "Thank you, </font>" & "<br>"
+    On Error Resume Next
+
+    ' compiles addresses in TO of notification tab
+    For Each ToCell In ToList
+        If ToCell.value Like "*@*" Then
+            If ToDest = "" Then
+                ToDest = ToCell.value
+            Else
+                ToDest = ToDest & ";" & ToCell.value
+            End If
+        End If
+    Next
+
+    ' compiles addresses in CC of notification tab
+    For Each CcCell In CcList
+        If CcCell.value Like "*@*" Then
+            If CcDest = "" Then
+                CcDest = CcCell.value
+            Else
+                CcDest = CcDest & ";" & CcCell.value
+            End If
+        End If
+    Next
+
+    ' compiles addresses in BCC list of notification tab, send to self to confirm report completion
+    For Each BccCell In BccList
+        If BccCell.value Like "*@*" Then
+            If BccDest = "" Then
+                BccDest = BccCell.value
+            Else
+                BccDest = BccDest & ";" & BccCell.value
+            End If
+        End If
+    Next
+
+Set xOtl = CreateObject("Outlook.Application")
+Set xOtlMail = xOtl.CreateItem(olMailItem)
+
+    With xOtlMail
+        '.ScreenUpdating = False
+        .To = ToDest
+        .cc = CcDest
+        .BCC = BccDest
+        .Subject = "Admin Tags Weekly Report - updated"
+    If Application.VBE.MainWindow.Visible = True Then Application.VBE.MainWindow.Visible = False
+        .display
+        strSig = .HTMLBody
+        .HTMLBody = StrBody & strSig
+        ' comment out .Display command above and engage .Send below to send without preview
+        .send
+    End With
+
+        SendKeys "%a{TAB 2}{ENTER}", True
+        SendKeys "{TAB}{TAB}{ENTER}", False
+
+    'Set validsend = xOtlMail.GetInspector
+    'validsend.Activate
+
+Set xOtl = Nothing
+Set xOtlMail = Nothing
+
+End Sub
+
