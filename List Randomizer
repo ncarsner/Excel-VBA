@@ -1,0 +1,60 @@
+Option Explicit
+
+Sub Randomize()
+
+Dim FirstCol, NewCol As Integer
+Dim LastRow As Long, startRow As Long
+Dim rg As Range
+Dim RL As Long, CL As Integer
+Dim ws As Worksheet
+
+RL = ActiveCell.Row
+CL = ActiveCell.Column
+
+Set ws = ActiveWorkbook.ActiveSheet
+Set rg = Cells(RL, CL).CurrentRegion
+
+Application.ScreenUpdating = False
+
+' Sets first row of data to sort
+startRow = 2
+
+' Finds first column in current set
+FirstCol = ws.Columns.End(xlToLeft).Column
+
+' Finds first blank column
+NewCol = 1 + rg.Columns.Count
+'NewCol = 1 + ws.Cells(1, Columns.Count).End(xlToLeft).Column
+
+' Works out the last used row in column A
+LastRow = rg.Rows.Count
+'LastRow = ActiveSheet.Cells(Rows.Count, "A").End(xlUp).Row
+
+' Puts your header at the top of the first blank column
+Cells(1, NewCol).value = "RAND"
+
+' Updates the first blank column with your desired formula
+Range(Cells(2, NewCol), Cells(LastRow, NewCol)).Formula = "=RAND()"
+
+ws.Sort.SortFields.Clear
+ws.Sort.SortFields.Add Key:=Range(Cells(2, NewCol), Cells(LastRow, NewCol)), _
+        SortOn:=xlSortOnValues, _
+        Order:=xlDescending, _
+        DataOption:=xlSortNormal
+    With ws.Sort
+        '.SetRange Range(Cells(2, NewCol), Cells(LastRow, NewCol))
+        .SetRange Range(Cells(2, FirstCol), Cells(LastRow, NewCol))
+        .Header = xlNo
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+
+Columns(NewCol).ClearContents
+
+Cells(RL, CL).Select
+
+Application.ScreenUpdating = True
+
+End Sub
