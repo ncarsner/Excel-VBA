@@ -1,0 +1,26 @@
+Dim PreVal
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+PreVal = Target.value
+oldAddress = Target.Address
+sSheetName = Application.ActiveSheet.Name
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If Target.value <> PreVal Then
+
+Sheets("LogChanges").Range("A" & Rows.Count).End(xlUp).Offset(1, 0).value = ActiveSheet.Name & " - " & Target.Address(0, 0)
+Sheets("LogChanges").Range("A" & Rows.Count).End(xlUp).Offset(0, 1).value = PreVal
+Sheets("LogChanges").Range("A" & Rows.Count).End(xlUp).Offset(0, 2).value = Target.value
+Sheets("LogChanges").Range("A" & Rows.Count).End(xlUp).Offset(0, 3).value = Application.UserName
+Sheets("LogChanges").Range("A" & Rows.Count).End(xlUp).Offset(0, 4).value = Now
+
+Sheets("LogChanges").Columns("A:E").AutoFit
+Application.EnableEvents = True
+End If
+
+End Sub
+
