@@ -1,0 +1,103 @@
+Sub ExecutionTimer()
+
+    Dim StartTime As Double
+    Dim SecondsElapsed As Double
+
+    'Remember time when macro starts
+    StartTime = Timer
+    
+    'Determine how many seconds code took to run
+    SecondsElapsed = Round(Timer - StartTime, 2) / 86400
+
+    MsgBox "This code ran successfully in " & Format(SecondsElapsed, "[hh:]mm:ss"), vbInformation
+
+End Sub
+Sub CodeTimer()
+
+Dim Count As Long
+Dim CodeStart As Double
+
+CodeStart = Timer
+
+i = InputBox("Count to???")
+'Start of Code to Test
+
+For Count = 1 To i
+    Sheet1.Cells(1, 1) = "test"
+Next Count
+
+'End of Code to Test
+
+'MsgBox Timer - BenchMark
+'MsgBox Format((Timer - CodeStart) / 86400, "hh:mm:ss")
+MsgBox "I can count to " & WorksheetFunction.Fixed(i, 0, False) & " in: " & Format((Timer - CodeStart) / 86400, "hh:mm:ss"), vbInformation
+
+End Sub
+
+Sub AgingBucketCorrections()
+'
+' AgingBucketCorrections Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+B
+'
+    Dim StartTime As Double
+    Dim SecondsElapsed As Double
+
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    'Remember time when macro starts
+    StartTime = Timer
+    
+    'Select active column
+    ActiveCell.EntireColumn.Select
+    
+    Selection.Replace What:="1/5/" & Year(Now()), Replacement:="'1-5", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.Replace What:="6/12/" & Year(Now()), Replacement:="'6-12", LookAt:=xlPart _
+        , SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.Replace What:="1/2/" & Year(Now()), Replacement:="'1-2", LookAt:=xlPart _
+        , SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.Replace What:="3/9/" & Year(Now()), Replacement:="'3-9", LookAt:=xlPart _
+        , SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.Replace What:="10/12/" & Year(Now()), Replacement:="'10-12", LookAt:=xlPart _
+        , SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    
+    Cells(RL, CL).Select
+    
+    'Determine how many seconds code took to run
+    SecondsElapsed = Round(Timer - StartTime, 2)
+
+    'Notify user in seconds
+    'MsgBox "This code ran successfully in " & SecondsElapsed & " seconds", vbInformation
+
+End Sub
+
+
+Sub RemoveEmptyLines()
+
+Dim xRng As Range, xCell As Range
+Dim i As Integer
+
+On Error Resume Next
+
+Set xRng = Application.InputBox("Select range:", "Remove blank lines", Selection.Address, , , , , 8)
+If xRng Is Nothing Then Exit Sub
+
+On Error Resume Next
+
+For Each xCell In xRng
+    For i = 1 To Len(xCell) - Len(WorksheetFunction.Substitute(xCell, Chr(10), ""))
+    xCell = Trim(Replace(xCell, Chr(10), ""))
+    
+  Next
+Next
+    
+End Sub
+
