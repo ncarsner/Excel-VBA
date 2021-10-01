@@ -1,0 +1,17 @@
+Sub Positive()
+
+' press Alt + F11 to open VBA
+' from workbooks at upper left window, right-click on worksheet, select Insert --> Module
+' copy this script into window
+' converts negative values to positive
+' assign keyboard shortcut using Developer tab
+' Developer --> Macro --> select Positive --> Options to assign keyboard shortcut
+
+Dim Cel As Range
+For Each Cel In Selection
+If IsNumeric(Cel.Value) Then
+Cel.Value = Abs(Cel.Value)
+End If
+Next Cel
+
+End Sub
