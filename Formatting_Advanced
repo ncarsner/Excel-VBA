@@ -1,0 +1,27 @@
+Sub dateAndDatetimeToString()
+
+' formats each cell in a selected range by validating whether it is dateTime (>5 characters) length or date length (5 characters)
+' iterates over each cell in selected range, converting each value to text string
+' text string is MM/DD/YYYY if date, or MM/DD/YYYYT00:00:00:000 if dateTime
+
+For Each cell In Selection
+    If Len(cell.value) > 5 Then
+        cell.value = Format(cell.value, "yyyymmdd hh:mm:ss:ms")
+        date_year = Left(cell, 4)
+        date_month = Mid(cell, 5, 2)
+        date_day = Mid(cell, 7, 2)
+        date_hour = Mid(cell, 10, 2)
+        date_minute = Mid(cell, 13, 2)
+        date_second = Mid(cell, 16, 2)
+        date_ms = Right(cell, Len(cell) - WorksheetFunction.Find("@", WorksheetFunction.Substitute(cell, ":", "@", Len(cell) - Len(WorksheetFunction.Substitute(cell, ":", ""))), 1))
+        cell.value = "'" & date_month & "/" & date_day & "/" & date_year & "T" & date_hour & ":" & date_minute & ":" & date_second & ":" & date_ms
+    Else:
+        cell.value = Format(cell.value, "yyyymmdd")
+        date_year = Left(cell, 4)
+        date_month = Mid(cell, 5, 2)
+        date_day = Mid(cell, 7, 2)
+        cell.value = "'" & date_month & "/" & date_day & "/" & date_year
+    End If
+Next cell
+
+End Sub
