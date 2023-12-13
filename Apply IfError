@@ -1,0 +1,14 @@
+Sub ApplyIfError()
+    Dim cell As Range
+    Dim selectedRange As Range
+    Set selectedRange = Selection
+
+    For Each cell In selectedRange
+        If cell.HasFormula Then
+            ' Check if the formula already starts with IFERROR
+            If Not Left(cell.Formula, 8) = "=IFERROR" Then
+                cell.Formula = "=IFERROR(" & Mid(cell.Formula, 2) & ","""")"
+            End If
+        End If
+    Next cell
+End Sub

@@ -1,0 +1,18 @@
+Sub name_replace()
+
+    ' replaces old string value with new string value on ALL sheets in workbook
+
+Dim ws As Worksheet
+Dim old_string As Variant
+Dim new_string As Variant
+
+    old_string = InputBox("What is the string to be replaced?")
+    new_string = InputBox("What is the new string value?")
+
+    For Each ws In ActiveWorkbook.Worksheets
+        ws.Cells.Replace What:=old_string, Replacement:=new_string, _
+            LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=True, _
+            SearchFormat:=False, ReplaceFormat:=False
+    Next ws
+
+End Sub

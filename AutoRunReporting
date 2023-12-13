@@ -9,6 +9,7 @@ Option Explicit
     
 'End Sub
 
+
 Sub AutoReportPivotRefresh()
 
 Dim sh As Worksheet
@@ -22,6 +23,7 @@ For Each sh In ActiveWorkbook.Worksheets
 Next sh
 
 End Sub
+
 
 Sub SaveCopy()
 
@@ -47,6 +49,7 @@ Call EmailNotice
     Application.DisplayAlerts = True
 
 End Sub
+
 
 Sub EmailNotice()
 
@@ -131,7 +134,7 @@ Set xOtlMail = xOtl.CreateItem(olMailItem)
         .To = ToDest
         .cc = CcDest
         .BCC = BccDest
-        .Subject = "Admin Tags Weekly Report - updated"
+        .Subject = "XXX Weekly Report - updated"
     If Application.VBE.MainWindow.Visible = True Then Application.VBE.MainWindow.Visible = False
         .display
         strSig = .HTMLBody
@@ -140,14 +143,14 @@ Set xOtlMail = xOtl.CreateItem(olMailItem)
         .send
     End With
 
-        SendKeys "%a{TAB 2}{ENTER}", True
-        SendKeys "{TAB}{TAB}{ENTER}", False
+        'SendKeys "%a{TAB 2}{ENTER}", True
+        'SendKeys "{TAB}{TAB}{ENTER}", False
 
     'Set validsend = xOtlMail.GetInspector
     'validsend.Activate
 
-Set xOtl = Nothing
-Set xOtlMail = Nothing
+    Set xOtl = Nothing
+    Set xOtlMail = Nothing
 
 End Sub
 

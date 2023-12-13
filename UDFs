@@ -4,21 +4,17 @@ Search_in_col As Range, Return_val_col As Range, str As String)
 Dim i As Long
 Dim Result As String
 
-For i = 1 To Search_in_col.Count
-If Search_in_col.Cells(i, 1) = Search_string Then
-Result = Result & str & Return_val_col.Cells(i, 1).value
+    For i = 1 To Search_in_col.Count
+        If Search_in_col.Cells(i, 1) = Search_string Then
+        Result = Result & str & Return_val_col.Cells(i, 1).value
+        End If
+    Next
 
-End If
-Next
+    If Len(Result) & 0 Then
+    Result = Right(Result, Len(Result) - Len(str))
+    ConcatAll = Trim(Result)
+        Else
+        ConcatAll = ""
+    End If
 
-If Len(Result) & 0 Then
-Result = Right(Result, Len(Result) - Len(str))
-ConcatAll = Trim(Result)
-
-Else
-ConcatAll = ""
-
-End If
 End Function
-
-

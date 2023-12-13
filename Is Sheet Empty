@@ -1,0 +1,11 @@
+Sub CheckSheetEmpty()
+
+'UpdatebyExtendoffice20170830
+
+    If WorksheetFunction.CountA(ActiveSheet.UsedRange) = 0 And ActiveSheet.Shapes.Count = 0 Then
+        MsgBox "Sheet is empty", vbInformation, "CONTENT CHECKER"
+    Else
+        MsgBox "Sheet is NOT empty", vbInformation, "CONTENT CHECKER"
+    End If
+
+End Sub

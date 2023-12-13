@@ -1,0 +1,42 @@
+Sub Clean_Array()
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+
+'executable timer
+Dim StartTime As Double
+Dim TimeElapsed As Double
+StartTime = Timer
+
+    'Assuming ScenarioTable is a range
+    Dim rg As Range
+    Set rg = Application.Selection
+
+    'Assume formulas present in range, get formulas into an array
+    Dim arr As Variant
+    arr = rg.Formula
+
+    Dim a As Long
+    Dim f As Long
+    
+    'Then loop over the array
+    For a = LBound(arr, 1) To UBound(arr, 1)
+        For f = LBound(arr, 2) To UBound(arr, 2)
+            If Not IsEmpty(arr(a, f)) Then
+                arr(a, f) = Application.WorksheetFunction.Clean(Application.WorksheetFunction.Trim(arr(a, f)))
+                'arr(a, f) = VBA.Trim(arr(a, f))
+            End If
+        Next f
+    Next a
+    
+    'Insert the results
+    rg.Formula = arr
+
+    'end timer, return results
+      TimeElapsed = Round(Timer - StartTime, 2)
+      MsgBox "Completed in " & TimeElapsed & " seconds", vbInformation
+
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+
+End Sub

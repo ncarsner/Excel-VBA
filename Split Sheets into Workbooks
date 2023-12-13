@@ -1,0 +1,27 @@
+Option Explicit
+
+Sub SplitSheetsIntoNewWorkbooks()
+
+Dim wbThis, wbNew As Workbook
+Dim ws As Worksheet
+Dim wbName, strFilename As String
+
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+
+    Set wbThis = Application.ActiveWorkbook
+    wbName = Replace(Application.ActiveWorkbook.Name, ".xlsx", "")
+    For Each ws In wbThis.Worksheets
+        strFilename = wbThis.Path & "/" & wbName & "_" & ws.Name & ".xlsx"
+        ws.Copy
+        Set wbNew = ActiveWorkbook
+        wbNew.SaveAs strFilename
+        wbNew.Close
+    Next ws
+
+Application.DisplayAlerts = True
+Application.ScreenUpdating = True
+
+    MsgBox "Process Complete!", vbInformation, "Complete"
+
+End Sub
