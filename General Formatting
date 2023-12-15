@@ -28,55 +28,6 @@ Sub Dates()
 
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub ResizeAll()
-'
-' Formats all columns in Active Sheet to best fit
-'
-    Dim RL As Long, CL As Integer
-    RL = ActiveCell.Row
-    CL = ActiveCell.Column
-
-    Cells.Select
-    Cells.EntireColumn.AutoFit
-    
-    Cells(RL, CL).Select
-
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub ResizePrompt()
-'
-' Prompts cancellable input value, formats all columns in Active Sheet to input width
-'
-    Dim RL As Long, CL As Integer
-    RL = ActiveCell.Row
-    CL = ActiveCell.Column
-    
-    On Error GoTo ErrHandler
-    
-    w = InputBox("What is the column width?")
-        
-    Cells.Select
-    Selection.ColumnWidth = w
-
-ErrHandler:
-    Cells(RL, CL).Select
-    
-    Exit Sub
-
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub UnhideAll()
-'
-' Unhides all hidden tabs within Active Workbook
-'
-    Dim ws As Worksheet
-    
-    For Each ws In Worksheets
-        ws.Visible = True
-    Next
- 
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub PasteAll()
 '
 ' Removes formulas from Active Sheet by copying and pasting all values, prompts for verification prior to execution
