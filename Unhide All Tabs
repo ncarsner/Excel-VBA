@@ -1,0 +1,11 @@
+Sub UnhideAll()
+
+' Unhides all hidden tabs within Active Workbook
+
+    Dim ws As Worksheet
+    
+    For Each ws In Worksheets
+        ws.Visible = True
+    Next
+ 
+End Sub

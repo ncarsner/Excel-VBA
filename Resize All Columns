@@ -1,0 +1,14 @@
+Sub ResizeAll()
+
+' Formats all columns in Active Sheet to best fit
+
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+
+    Cells.Select
+    Cells.EntireColumn.AutoFit
+    
+    Cells(RL, CL).Select
+
+End Sub
