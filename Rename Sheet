@@ -1,0 +1,18 @@
+Sub RenameSheet()
+
+' Prompts cancellable input value, renames Active Sheet tab to input value
+
+    Dim RL As Long, CL As Integer
+    RL = ActiveCell.Row
+    CL = ActiveCell.Column
+    
+    On Error GoTo ErrHandler
+
+    ActiveSheet.Name = InputBox("New tab name?")
+    
+    Cells(RL, CL).Select
+    
+ErrHandler:
+    Exit Sub
+
+End Sub

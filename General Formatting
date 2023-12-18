@@ -46,25 +46,6 @@ Sub PasteAll()
 
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub RenameSheet()
-'
-' Prompts cancellable input value, renames Active Sheet tab to input value
-'
-    Dim RL As Long, CL As Integer
-    RL = ActiveCell.Row
-    CL = ActiveCell.Column
-    
-    On Error GoTo ErrHandler
-
-    ActiveSheet.Name = InputBox("New tab name?")
-    
-    Cells(RL, CL).Select
-    
-ErrHandler:
-    Exit Sub
-
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub CellQA()
 '
 ' Shades Active Cell(s) to Yellow background, Red text
@@ -110,24 +91,6 @@ Sub CellBad()
 
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub RefreshPivots()
-
-'
-' Refreshes all PivotTables in Active Workbook
-'
-
-Dim sh As Worksheet
-Dim pt As PivotTable
-
-For Each sh In ActiveWorkbook.Worksheets
-    For Each pt In sh.PivotTables
-        pt.RefreshTable
-        pt.Update
-    Next pt
-Next sh
-
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub ColorCellsPrompt()
 
 '
@@ -149,21 +112,6 @@ Dim lcolor As Long, fcolor As Long
         'user pressed Cancel
 End If
 
-End Sub
-''''''''''''''''''''''''''''''''''''''''''''''''''
-Sub FindFormulas()
-'
-' Highlights all Cells in Active Sheet with Formulas (not static values)
-'
-    On Error GoTo ErrHandler
-
-    Selection.SpecialCells(xlCellTypeFormulas, 23).Select
-    Exit Sub
-
-ErrHandler:
-    MsgBox ("No cells were found")
-    Exit Sub
-    
 End Sub
 ''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub TabColors()

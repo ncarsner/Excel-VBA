@@ -1,0 +1,16 @@
+Sub RefreshPivots()
+
+' Refreshes all PivotTables in Active Workbook
+
+Dim sh As Worksheet
+Dim pt As PivotTable
+
+For Each sh In ActiveWorkbook.Worksheets
+    For Each pt In sh.PivotTables
+        pt.RefreshTable
+        pt.Update
+    Next pt
+Next sh
+
+End Sub
+''''''''''''''''''''''''''''''''''''''''''''''''''
